@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_sentimentanalysis" default="compile.module.sentimentanalysis">
+  <dirname property="module.sentimentanalysis.basedir" file="${ant.file.module_sentimentanalysis}"/>
+  
+  <property name="module.jdk.home.sentimentanalysis" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.sentimentanalysis" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.sentimentanalysis" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.sentimentanalysis" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="sentimentanalysis.output.dir" value="${module.sentimentanalysis.basedir}/../../out/production/SentimentAnalysis"/>
+  <property name="sentimentanalysis.testoutput.dir" value="${module.sentimentanalysis.basedir}/../../out/test/SentimentAnalysis"/>
+  
+  <path id="sentimentanalysis.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="sentimentanalysis.module.production.classpath">
+    <path refid="${module.jdk.classpath.sentimentanalysis}"/>
+    <path refid="library.mysql-connector-java-5.1.34-bin.classpath"/>
+    <path refid="library.twitter4j-async-4.0.4_(2).classpath"/>
+    <path refid="library.standford_nlp.classpath"/>
+    <path refid="library.stanford-corenlp-3.7.0.classpath"/>
+    <path refid="library.stanford-corenlp-full-2016-10-31.classpath"/>
+  </path>
+  
+  <path id="sentimentanalysis.runtime.production.module.classpath">
+    <pathelement location="${sentimentanalysis.output.dir}"/>
+    <path refid="library.mysql-connector-java-5.1.34-bin.classpath"/>
+    <path refid="library.twitter4j-async-4.0.4_(2).classpath"/>
+    <path refid="library.standford_nlp.classpath"/>
+    <path refid="library.stanford-corenlp-3.7.0.classpath"/>
+    <path refid="library.stanford-corenlp-full-2016-10-31.classpath"/>
+  </path>
+  
+  <path id="sentimentanalysis.module.classpath">
+    <path refid="${module.jdk.classpath.sentimentanalysis}"/>
+    <pathelement location="${sentimentanalysis.output.dir}"/>
+    <path refid="library.mysql-connector-java-5.1.34-bin.classpath"/>
+    <path refid="library.twitter4j-async-4.0.4_(2).classpath"/>
+    <path refid="library.standford_nlp.classpath"/>
+    <path refid="library.stanford-corenlp-3.7.0.classpath"/>
+    <path refid="library.stanford-corenlp-full-2016-10-31.classpath"/>
+  </path>
+  
+  <path id="sentimentanalysis.runtime.module.classpath">
+    <pathelement location="${sentimentanalysis.testoutput.dir}"/>
+    <pathelement location="${sentimentanalysis.output.dir}"/>
+    <path refid="library.mysql-connector-java-5.1.34-bin.classpath"/>
+    <path refid="library.twitter4j-async-4.0.4_(2).classpath"/>
+    <path refid="library.standford_nlp.classpath"/>
+    <path refid="library.stanford-corenlp-3.7.0.classpath"/>
+    <path refid="library.stanford-corenlp-full-2016-10-31.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.sentimentanalysis">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.sentimentanalysis">
+    <patternset refid="excluded.from.module.sentimentanalysis"/>
+  </patternset>
+  
+  <path id="sentimentanalysis.module.sourcepath">
+    <dirset dir="${module.sentimentanalysis.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.sentimentanalysis" depends="compile.module.sentimentanalysis.production,compile.module.sentimentanalysis.tests" description="Compile module SentimentAnalysis"/>
+  
+  <target name="compile.module.sentimentanalysis.production" depends="register.custom.compilers" description="Compile module SentimentAnalysis; production classes">
+    <mkdir dir="${sentimentanalysis.output.dir}"/>
+    <javac2 destdir="${sentimentanalysis.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.sentimentanalysis}/javac">
+      <compilerarg line="${compiler.args.sentimentanalysis}"/>
+      <bootclasspath refid="sentimentanalysis.module.bootclasspath"/>
+      <classpath refid="sentimentanalysis.module.production.classpath"/>
+      <src refid="sentimentanalysis.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.sentimentanalysis"/>
+    </javac2>
+    
+    <copy todir="${sentimentanalysis.output.dir}">
+      <fileset dir="${module.sentimentanalysis.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.sentimentanalysis.tests" depends="register.custom.compilers,compile.module.sentimentanalysis.production" description="compile module SentimentAnalysis; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.sentimentanalysis" description="cleanup module">
+    <delete dir="${sentimentanalysis.output.dir}"/>
+    <delete dir="${sentimentanalysis.testoutput.dir}"/>
+  </target>
+</project>

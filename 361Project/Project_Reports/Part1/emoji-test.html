@@ -1,0 +1,17 @@
+<script src='assets/twemoji.js'>
+
+</script><!DOCTYPE html>
+<html>
+<head>
+	<script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
+<script>
+	function myFunction(){
+	$('body').append( twemoji.parse(eval("'" + $('#input').val()+ "'")));
+}
+</script>
+</head>
+<body>
+	<input id='input'></input>
+<button type="button" onclick="myFunction()">Try it</button>
+</body>
+
